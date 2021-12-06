@@ -1,3 +1,10 @@
+# get flags
+while getopts 'f' flag; do
+  case "${flag}" in
+    f) no_cache='true' ;;
+  esac
+done
+
 # cleanup build
 rm -rf build/*
 
@@ -24,14 +31,18 @@ fi
 
 # extract blank folder from OS assets
 assets_location="/System/Library/PrivateFrameworks/IconFoundation.framework/Versions/A/Resources/Assets.car"
-temp=$TMPDIR/io.kmr.folderIcons/AssetsOutput
+temp=$TMPDIR/io.kmr.folderIcons
 folder_icon="$temp/$theme_folder_file"
+
+if [[ $no_cache ]]; then
+  rm -rf $temp
+fi
 
 if test -f "$folder_icon"; then
   echo "Blank folder already extracted, skipping..."
 else
   echo "Extracting blank folder"
-  ./bin/acextract -i $assets_location -o $temp
+  ./bin/acextract -i $assets_location -o $temp > /dev/null
 fi
 
 # convert svgs
