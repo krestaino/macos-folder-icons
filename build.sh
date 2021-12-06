@@ -34,18 +34,20 @@ fi
 
 # extract blank folder from OS assets
 ASSETS_LOCATION="/System/Library/PrivateFrameworks/IconFoundation.framework/Versions/A/Resources/Assets.car"
-TEMP=$TMPDIR/io.kmr.folderIcons
-FOLDER_ICON="$TEMP/$THEME_FOLDER_FILE"
+TMP=$TMPDIR/io.kmr.folderIcons
+FOLDER_ICON="$TMP/$THEME_FOLDER_FILE"
 
+# delete tmp if -f flag is set
 if [[ $NO_CACHE ]]; then
-  rm -rf $TEMP
+  rm -rf $TMP
 fi
 
+# extract blank folder
 if test -f "$FOLDER_ICON"; then
   echo "$(tput setaf 3)Blank folder already extracted, skipping...$(tput sgr0)"
 else
   echo "Extracting blank folder"
-  ./bin/acextract -i $ASSETS_LOCATION -o $TEMP > /dev/null
+  ./bin/acextract -i $ASSETS_LOCATION -o $TMP > /dev/null
 fi
 
 # convert svgs
