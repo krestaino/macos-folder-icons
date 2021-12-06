@@ -4,6 +4,10 @@ This script generates custom folder icons using images (SVG, PNG, etc) or [SF Sy
 
 ![Screenshot](.github/screenshot.png)
 
+## Requirements
+
+ImageMagick 7
+
 ## Getting Started
 
 1. Download or clone the repo and open a terminal at the root of the project.
