@@ -2,11 +2,13 @@
 rm -rf build/*
 
 # set theme
-theme="auto"
+theme="system"
+echo "Building for $theme theme"
+
 dark_folder="FolderDark512x512@2x.png"
 light_folder="Folder512x512@2x.png"
 
-if [ $theme == "auto" ]; then
+if [ $theme == "system" ]; then
   if [ "$(defaults read -g AppleInterfaceStyle)" == "Dark" ]; then
       theme_folder_file=$dark_folder
   else
@@ -23,14 +25,21 @@ fi
 # extract blank folder from OS assets
 assets_location="/System/Library/PrivateFrameworks/IconFoundation.framework/Versions/A/Resources/Assets.car"
 temp=$TMPDIR/AssetsOutput
-
-./bin/acextract -i $assets_location -o $temp
 folder_icon="$temp/$theme_folder_file"
 
+if test -f "$folder_icon"; then
+    echo "Blank folder already extracted, skipping..."
+else 
+    echo "Extracting blank folder"
+    ./bin/acextract -i $assets_location -o $temp
+fi
+
 # convert svgs
+echo "Converting custom icons"
 mogrify -density 2000 -resize x512 -background transparent -format png -path custom/ custom/*.svg
 
 # build custom icon folders
+echo "Building custom icons"
 for file in custom/*.png; do
   filename=$(echo "$file" | cut -f 1 -d '.')
   basename="$(basename "$filename")"
@@ -41,6 +50,7 @@ for file in custom/*.png; do
 done
 
 # build SF Pro icon folders
+echo "Building symbol icons"
 symbols=`cat symbols.txt`
 
 for (( i=0; i<${#symbols}; i++ )); do
@@ -51,19 +61,20 @@ for (( i=0; i<${#symbols}; i++ )); do
 done
 
 # build 
+echo "Building .icns files"
 for file in build/*.png; do
   filename=$(echo "$file" | cut -f 1 -d '.')
   mkdir "$filename.iconset"
 
-  sips -z 16 16     "$filename.png" --out "$filename.iconset/icon_16x16.png"
-  sips -z 32 32     "$filename.png" --out "$filename.iconset/icon_16x16@2x.png"
-  sips -z 32 32     "$filename.png" --out "$filename.iconset/icon_32x32.png"
-  sips -z 64 64     "$filename.png" --out "$filename.iconset/icon_32x32@2x.png"
-  sips -z 128 128   "$filename.png" --out "$filename.iconset/icon_128x128.png"
-  sips -z 256 256   "$filename.png" --out "$filename.iconset/icon_128x128@2x.png"
-  sips -z 256 256   "$filename.png" --out "$filename.iconset/icon_256x256.png"
-  sips -z 512 512   "$filename.png" --out "$filename.iconset/icon_256x256@2x.png"
-  sips -z 512 512   "$filename.png" --out "$filename.iconset/icon_512x512.png"
+  sips -z 16 16     "$filename.png" --out "$filename.iconset/icon_16x16.png" > /dev/null
+  sips -z 32 32     "$filename.png" --out "$filename.iconset/icon_16x16@2x.png" > /dev/null
+  sips -z 32 32     "$filename.png" --out "$filename.iconset/icon_32x32.png"  > /dev/null
+  sips -z 64 64     "$filename.png" --out "$filename.iconset/icon_32x32@2x.png"  > /dev/null
+  sips -z 128 128   "$filename.png" --out "$filename.iconset/icon_128x128.png"  > /dev/null
+  sips -z 256 256   "$filename.png" --out "$filename.iconset/icon_128x128@2x.png"  > /dev/null
+  sips -z 256 256   "$filename.png" --out "$filename.iconset/icon_256x256.png"  > /dev/null
+  sips -z 512 512   "$filename.png" --out "$filename.iconset/icon_256x256@2x.png"  > /dev/null
+  sips -z 512 512   "$filename.png" --out "$filename.iconset/icon_512x512.png"  > /dev/null
   cp "$filename.png" "$filename.iconset/icon_512x512@2x.png"
 
   iconutil -c icns "$filename.iconset"
@@ -72,3 +83,4 @@ done
 
 # cleanup build
 rm -rf build/*.iconset build/*.png
+echo "Build complete. Icons are located in the 'build' folder."
