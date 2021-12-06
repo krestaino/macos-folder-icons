@@ -10,7 +10,7 @@ rm -rf build/*
 
 # set theme
 THEME="system"
-echo "Building for $THEME theme"
+echo "Building for $(tput setaf 4)$THEME$(tput sgr0) theme"
 
 DARK_FOLDER="FolderDark512x512@2x.png"
 LIGHT_FOLDER="Folder512x512@2x.png"
@@ -39,7 +39,7 @@ if [[ $NO_CACHE ]]; then
 fi
 
 if test -f "$FOLDER_ICON"; then
-  echo "Blank folder already extracted, skipping..."
+  echo "$(tput setaf 3)Blank folder already extracted, skipping...$(tput sgr0)"
 else
   echo "Extracting blank folder"
   ./bin/acextract -i $ASSETS_LOCATION -o $TEMP > /dev/null
@@ -94,4 +94,4 @@ done
 
 # cleanup build
 rm -rf build/*.iconset build/*.png
-echo "Build complete. Icons are located in the 'build' folder."
+echo "$(tput setaf 2)Build complete!$(tput sgr0) Icons are located in the $(tput setaf 4)build$(tput sgr0) folder."
