@@ -10,15 +10,15 @@ light_folder="Folder512x512@2x.png"
 
 if [ $theme == "system" ]; then
   if [ "$(defaults read -g AppleInterfaceStyle)" == "Dark" ]; then
-      theme_folder_file=$dark_folder
+    theme_folder_file=$dark_folder
   else
-      theme_folder_file=$light_folder
+    theme_folder_file=$light_folder
   fi
 else
   if [ "$theme" = "dark" ]; then
-      theme_folder_file=$dark_folder
+    theme_folder_file=$dark_folder
   else
-      theme_folder_file=$light_folder
+    theme_folder_file=$light_folder
   fi
 fi
 
@@ -28,10 +28,10 @@ temp=$TMPDIR/AssetsOutput
 folder_icon="$temp/$theme_folder_file"
 
 if test -f "$folder_icon"; then
-    echo "Blank folder already extracted, skipping..."
-else 
-    echo "Extracting blank folder"
-    ./bin/acextract -i $assets_location -o $temp
+  echo "Blank folder already extracted, skipping..."
+else
+  echo "Extracting blank folder"
+  ./bin/acextract -i $assets_location -o $temp
 fi
 
 # convert svgs
@@ -51,30 +51,30 @@ done
 
 # build SF Pro icon folders
 echo "Building symbol icons"
-symbols=`cat symbols.txt`
+symbols=$(cat symbols.txt)
 
-for (( i=0; i<${#symbols}; i++ )); do
+for ((i = 0; i < ${#symbols}; i++)); do
   symbol="${symbols:$i:1}"
   convert $folder_icon \
     \( -background transparent -fill '#1ca1dd' -font SF-Pro-Text-Regular -size 512x512 -pointsize 340 -gravity center -geometry +0+40 label:$symbol \) \
     -compose over -composite build/$symbol.png
 done
 
-# build 
+# build
 echo "Building .icns files"
 for file in build/*.png; do
   filename=$(echo "$file" | cut -f 1 -d '.')
   mkdir "$filename.iconset"
 
-  sips -z 16 16     "$filename.png" --out "$filename.iconset/icon_16x16.png" > /dev/null
-  sips -z 32 32     "$filename.png" --out "$filename.iconset/icon_16x16@2x.png" > /dev/null
-  sips -z 32 32     "$filename.png" --out "$filename.iconset/icon_32x32.png"  > /dev/null
-  sips -z 64 64     "$filename.png" --out "$filename.iconset/icon_32x32@2x.png"  > /dev/null
-  sips -z 128 128   "$filename.png" --out "$filename.iconset/icon_128x128.png"  > /dev/null
-  sips -z 256 256   "$filename.png" --out "$filename.iconset/icon_128x128@2x.png"  > /dev/null
-  sips -z 256 256   "$filename.png" --out "$filename.iconset/icon_256x256.png"  > /dev/null
-  sips -z 512 512   "$filename.png" --out "$filename.iconset/icon_256x256@2x.png"  > /dev/null
-  sips -z 512 512   "$filename.png" --out "$filename.iconset/icon_512x512.png"  > /dev/null
+  sips -z 16 16 "$filename.png" --out "$filename.iconset/icon_16x16.png" > /dev/null
+  sips -z 32 32 "$filename.png" --out "$filename.iconset/icon_16x16@2x.png" > /dev/null
+  sips -z 32 32 "$filename.png" --out "$filename.iconset/icon_32x32.png" > /dev/null
+  sips -z 64 64 "$filename.png" --out "$filename.iconset/icon_32x32@2x.png" > /dev/null
+  sips -z 128 128 "$filename.png" --out "$filename.iconset/icon_128x128.png" > /dev/null
+  sips -z 256 256 "$filename.png" --out "$filename.iconset/icon_128x128@2x.png" > /dev/null
+  sips -z 256 256 "$filename.png" --out "$filename.iconset/icon_256x256.png" > /dev/null
+  sips -z 512 512 "$filename.png" --out "$filename.iconset/icon_256x256@2x.png" > /dev/null
+  sips -z 512 512 "$filename.png" --out "$filename.iconset/icon_512x512.png" > /dev/null
   cp "$filename.png" "$filename.iconset/icon_512x512@2x.png"
 
   iconutil -c icns "$filename.iconset"
