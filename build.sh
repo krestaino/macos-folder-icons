@@ -61,7 +61,7 @@ for file in custom/*.png; do
   BASENAME="$(BASENAME "$FILENAME")"
 
   convert $FOLDER_ICON \
-    \( -background transparent -size 512x512 -gravity center -geometry +0+40 $file -resize X300 -colorize 100 -fill '#1ca1dd' +opaque "#00000000" \) \
+    \( -background transparent -size 512x512 -gravity center -geometry +0+40 $file -resize X300 -fill '#1ca1dd' -colorize 100% \) \
     -compose over -composite "build/$BASENAME.png"
 done
 
