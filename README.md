@@ -12,6 +12,10 @@ This script generates custom folder icons using images (SVG, PNG, etc) or [SF Sy
 4. Run `./build.sh` to build the icons.
 5. Icons are located in the [build](build) folder.
 
+## Using Icons
+
+https://support.apple.com/en-gu/guide/mac-help/mchlp2313/mac
+
 ## Building on a different macOS version
 
 1. Edit `ASSETS_LOCATION` to the appropriate path for your OS version.
