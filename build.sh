@@ -24,7 +24,7 @@ fi
 
 # extract blank folder from OS assets
 assets_location="/System/Library/PrivateFrameworks/IconFoundation.framework/Versions/A/Resources/Assets.car"
-temp=$TMPDIR/AssetsOutput
+temp=$TMPDIR/io.kmr.folderIcons/AssetsOutput
 folder_icon="$temp/$theme_folder_file"
 
 if test -f "$folder_icon"; then
