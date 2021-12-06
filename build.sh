@@ -1,3 +1,6 @@
+#!/bin/bash
+# Source: https://github.com/krestaino/macos-folder-icons
+
 # get flags
 while getopts 'f' flag; do
   case "${flag}" in
@@ -71,7 +74,7 @@ for ((i = 0; i < ${#SYMBOLS}; i++)); do
     -compose over -composite build/$SYMBOL.png
 done
 
-# build
+# build .icns
 echo "Building .icns files"
 for file in build/*.png; do
   FILENAME=$(echo "$file" | cut -f 1 -d '.')
@@ -94,4 +97,5 @@ done
 
 # cleanup build
 rm -rf build/*.iconset build/*.png
+
 echo "$(tput setaf 2)Build complete!$(tput sgr0) Icons are located in the $(tput setaf 4)build$(tput sgr0) folder."
