@@ -11,10 +11,12 @@ ImageMagick 7
 ## Getting Started
 
 1. Download or clone the repo and open a terminal at the root of the project.
-2. Place images in the [custom](custom) folder if you want to use SVGs or PNGs.
-3. Copy symbols into the [symbols.txt](symbols.txt) file if you want to use [SF Symbols](https://developer.apple.com/sf-symbols/).
-4. Run `./build.sh` to build the icons.
-5. Icons are located in the [build](build) folder.
+2. Download [acextract](https://github.com/bartoszj/acextract/releases) and place it in the `bin` folder
+3. Open acexttract and bypass security warnings (control + double click)
+4. Place images in the [custom](custom) folder if you want to use SVGs or PNGs.
+5. Copy symbols into the [symbols.txt](symbols.txt) file if you want to use [SF Symbols](https://developer.apple.com/sf-symbols/).
+6. Run `./build.sh` to build the icons.
+7. Icons are located in the [build](build) folder.
 
 ## Using Icons
 
