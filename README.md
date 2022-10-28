@@ -1,6 +1,6 @@
 # macOS Folder Icons
 
-This script generates custom folder icons using images (SVG, PNG, etc) or [SF Symbols](https://developer.apple.com/sf-symbols/). The blank folder icon is extracted from your system, you may need to change the path location and file name depending on your OS version. This script has only been tested on macOS Monterey 12.0.1.
+This script generates custom folder icons using images (SVG, PNG, etc) or [SF Symbols](https://developer.apple.com/sf-symbols/). The blank folder icon is extracted from your system, you may need to change the path location and file name depending on your OS version. This script targets macOS 12.x and 13.0.
 
 ![Screenshot](.github/screenshot.png)
 
